@@ -6,6 +6,9 @@
 namespace s21 {
 
 template <typename T>
+class Matrix4x4;
+
+template <typename T>
 class Vertex {
  public:
   Vertex(void);
@@ -34,58 +37,102 @@ class Vertex {
   Vertex operator*(const T &ratio) const noexcept;
   Vertex &operator*=(const T &ratio) noexcept;
 
+ public:
+  Vertex(const Matrix4x4<T> source) {
+    for(size_t i = 0; i < 4; i++) {
+      point_[i] = source(i, i);
+    }
+  }
+
+  Vertex operator*(const Matrix4x4<T> &transform) const {
+    Vertex<T> temp = {0, 0, 0, 0};
+    for(size_t i = 0; i < 4; i++) {
+      for(size_t j = 0; j < 4; j++) {
+        temp[i] += (*this)[j] * transform(j, i);
+      }
+    }
+    return temp;
+  }
+  
+  Vertex &operator*=(const Matrix4x4<T> &transform) {
+    (*this) = (*this) * transform;
+    return (*this);
+  }
+  
+  Vertex &operator=(Matrix4x4<T> &&source) {
+    for(size_t i = 0; i < 4; i++) {
+      (*this)[i] = source(i, i);
+    }
+    return (*this);
+  }
+
+  Vertex operator+(const Vertex<T> &source) {
+    Vertex<T> temp;
+      for(size_t i = 0; i < 4; i++) {
+        temp[i] = (*this)[i] + source[i];
+      }
+      return temp;
+    }
+
+  Vertex &operator+=(const Vertex<T> &source) {
+    for(size_t i = 0; i < 4; i++) {
+      (*this)[i] += source[i];
+    }
+    return (*this);
+  }
+
  private:
-  T p_[4];
+  T point_[4];
 };
 
 template <typename T>
-Vertex<T>::Vertex(void) : p_{T{}, T{}, T{}, T{1}} {}
+Vertex<T>::Vertex(void) : point_{T{}, T{}, T{}, T{1}} {}
 
 template <typename T>
 Vertex<T>::Vertex(const T& x, const T& y, const T& z, const T& w)
-    : p_{x, y, z, w}
+    : point_{x, y, z, w}
 {}
 
 template <typename T>
-inline T& Vertex<T>::x(void) noexcept { return p_[0]; }
+inline T& Vertex<T>::x(void) noexcept { return point_[0]; }
 
 template <typename T>
-inline const T& Vertex<T>::x(void) const noexcept { return p_[0]; }
+inline const T& Vertex<T>::x(void) const noexcept { return point_[0]; }
 
 template <typename T>
-inline T& Vertex<T>::y(void) noexcept { return p_[1]; }
+inline T& Vertex<T>::y(void) noexcept { return point_[1]; }
 
 template <typename T>
-inline const T& Vertex<T>::y(void) const noexcept { return p_[1]; }
+inline const T& Vertex<T>::y(void) const noexcept { return point_[1]; }
 
 template <typename T>
-inline T& Vertex<T>::z(void) noexcept { return p_[2]; }
+inline T& Vertex<T>::z(void) noexcept { return point_[2]; }
 
 template <typename T>
-inline const T& Vertex<T>::z(void) const noexcept { return p_[2]; }
+inline const T& Vertex<T>::z(void) const noexcept { return point_[2]; }
 
 template <typename T>
-inline T& Vertex<T>::w(void) noexcept { return p_[3]; }
+inline T& Vertex<T>::w(void) noexcept { return point_[3]; }
 
 template <typename T>
-inline const T& Vertex<T>::w(void) const noexcept { return p_[3]; }
+inline const T& Vertex<T>::w(void) const noexcept { return point_[3]; }
 
 template <typename T>
-inline T& Vertex<T>::operator[](size_t idx){ return p_[idx]; }
+inline T& Vertex<T>::operator[](size_t idx){ return point_[idx]; }
 
 template <typename T>
-inline const T& Vertex<T>::operator[](size_t idx) const { return p_[idx]; }
+inline const T& Vertex<T>::operator[](size_t idx) const { return point_[idx]; }
 
 template <typename T>
 inline Vertex<T> Vertex<T>::operator*(const T &ratio) const noexcept {
-	return Vertex{p_[0] * ratio, p_[1] * ratio, p_[2] * ratio, p_[3]};
+	return Vertex{point_[0] * ratio, point_[1] * ratio, point_[2] * ratio, point_[3]};
 }
 
 template <typename T>
 inline Vertex<T> &Vertex<T>::operator*=(const T &ratio) noexcept {
-	p_[0] *= ratio;
-	p_[1] *= ratio;
-	p_[2] *= ratio;
+	point_[0] *= ratio;
+	point_[1] *= ratio;
+	point_[2] *= ratio;
 	return *this;
 }
 
