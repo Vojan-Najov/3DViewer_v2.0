@@ -55,6 +55,6 @@ class TransformMatrixBuilder {
         }
 };
 
-};
+}  // namespace s21
 
 #endif  // TRANSFORM_MATRIX_BUILDER_H_
