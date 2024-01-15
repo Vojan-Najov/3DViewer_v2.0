@@ -13,6 +13,7 @@ class Vertex {
  public:
   Vertex(void);
   Vertex(const T& x, const T& y, const T& z, const T& w = T{1});
+	explicit Vertex(const char *str);
 	Vertex(const Vertex &other) = default;
 	Vertex(Vertex &&other) = default;
 	Vertex &operator=(const Vertex &other) = default;
@@ -94,6 +95,11 @@ Vertex<T>::Vertex(const T& x, const T& y, const T& z, const T& w)
 {}
 
 template <typename T>
+Vertex<T>::Vertex(const char *str) : Vertex{} {
+	(void) str;
+}
+
+template <typename T>
 inline T& Vertex<T>::x(void) noexcept { return point_[0]; }
 
 template <typename T>
@@ -146,13 +152,18 @@ std::istream & operator>>(std::istream &is, Vertex<T> &v) {
 	std::istream::sentry s{is};
 
 	if (s) {
-		char c;
+		std::istream::int_type c;
 		double x{0.0}, y{0.0}, z{0.0}, w{1.0};
 
-		is >> c;
-		if (c != 'v') {
-			is.setstate(std::ios_base::failbit);
+		is >> std::ws;
+		if (is.peek() == 'v') {
+			c = is.get();
 		}
+		//c = is.peek();
+		//if (c == '\n' || !std::isspace(c) || !std::isdigit(c)) {
+		//	is.setstate(std::ios_base::failbit);
+		//}
+		(void) c;
 
 		is >> x >> y >> z;
 		if (is) {
