@@ -1,8 +1,8 @@
-#ifndef __MATRIX4X4_H
-#define __MATRIX4X4_H
+#ifndef MATRIX4X4_H_
+#define MATRIX4X4_H_
 
-#include <stddef.h>
-#include "math.h"
+#include <cstddef>
+#include "cmath"
 
 namespace s21 {
 
@@ -131,6 +131,6 @@ class Matrix4x4 {
         }
 };
 
-}; 
+}  // namespace s21
 
-#endif  // __MATRIX4X4_H
+#endif  // MATRIX4X4_H_
