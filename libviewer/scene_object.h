@@ -8,6 +8,7 @@ namespace s21 {
 template <typename T>
 class SceneObject {
  public:
+  virtual size_t VerticesNumber(void) const = 0;
   virtual void Transform(const Matrix4x4<T> &m) = 0;
   virtual ~SceneObject(void) {}
 };
