@@ -1,35 +1,33 @@
 #ifndef LIBVIEWER_SCENE_H_
 #define LIBVIEWER_SCENE_H_
 
-#include <list>
 #include <memory>
 
-#include "scene_object.h"
+#include "figure.h"
 
 namespace s21 {
 
 template <typename T, typename U>
 class Scene final {
  public:
-  void AddObject(SceneObject<T, U> *so);
-  const SceneObject<T, U> &GetObject(void) const;
+  void AddFigure(Figure<T, U> *so);
+  const Figure<T, U> &GetFigure(void) const;
 
  private:
-  std::list<std::unique_ptr<SceneObject<T, U>>> objlst_;
+  std::unique_ptr<Figure<T, U>> figure_;
 
   // Camera<T> camera_;
-  // Model<T> *model_;
   // Settings settings_; it is singleton
 };
 
 template <typename T, typename U>
-void Scene<T, U>::AddObject(SceneObject<T, U> *so) {
-  objlst_.emplace_back(so);
+void Scene<T, U>::AddFigure(Figure<T, U> *so) {
+  figure_ = std::unique_ptr<Figure<T, U>>(so);
 }
 
 template <typename T, typename U>
-const SceneObject<T, U> &Scene<T, U>::GetObject(void) const {
-  return *(objlst_.front());
+const Figure<T, U> &Scene<T, U>::GetFigure(void) const {
+  return *figure_;
 }
 
 }  // namespace s21

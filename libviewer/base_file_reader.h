@@ -2,11 +2,6 @@
 #define LIBVIEWER_BASE_FILE_READER_H_
 
 #include <fstream>
-#include <iostream>
-#include <string>
-
-#include "scene.h"
-#include "wireframe.h"
 
 namespace s21 {
 

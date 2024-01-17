@@ -2,12 +2,11 @@
 #define LIBVIEWER_OBJ_FILE_READER_H_
 
 #include <fstream>
-#include <iostream>
 #include <string>
 
 #include "base_file_reader.h"
+#include "figure.h"
 #include "scene.h"
-#include "wireframe.h"
 
 namespace s21 {
 
@@ -34,7 +33,7 @@ inline Scene<T, U> *VFObjFileReader<T, U>::ReadScene(void) {
   }
 
   file_.seekg(0);
-  Wireframe<T> *wf = new Wireframe<T, U>{};
+  Figure<T> *figure = new Figure<T, U>{};
 
   while (file_) {
     std::string token;
@@ -42,11 +41,11 @@ inline Scene<T, U> *VFObjFileReader<T, U>::ReadScene(void) {
     if (token == "v") {
       Vertex<T> v;
       file_ >> v;
-      wf->PushBack(v);
+      figure->PushBack(v);
     } else if (token == "f") {
       Face<U> f;
       file_ >> f;
-      wf->PushBack(f);
+      figure->PushBack(f);
     } else {
       std::string line;
       std::getline(file_, line, '\n');
@@ -54,7 +53,7 @@ inline Scene<T, U> *VFObjFileReader<T, U>::ReadScene(void) {
   }
 
   Scene<T, U> *sc = new Scene<T, U>;
-  sc->AddObject(wf);
+  sc->AddFigure(figure);
 
   return sc;
 }
