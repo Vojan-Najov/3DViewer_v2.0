@@ -33,7 +33,7 @@ BaseFileReader::~BaseFileReader(void) {
   file_.close();
 }
 
-template <typename T>
+template <typename T, typename U>
 class VFObjFileReader : public BaseFileReader {
  public:
   VFObjFileReader(const char *pathname) : BaseFileReader(pathname) {}
@@ -46,12 +46,12 @@ class VFObjFileReader : public BaseFileReader {
   VFObjFileReader &operator=(VFObjFileReader &&other) = delete;
 
  public:
-  Scene<T> *ReadScene(void);
+  Scene<T, U> *ReadScene(void);
 };
 
-template <typename T>
-inline Scene<T> *VFObjFileReader<T>::ReadScene(void) {
-	Wireframe<T> *wf = new Wireframe<T>{};
+template <typename T, typename U>
+inline Scene<T, U> *VFObjFileReader<T, U>::ReadScene(void) {
+	Wireframe<T> *wf = new Wireframe<T, U>{};
 
 	while (file_) {
 		std::string token;
@@ -61,15 +61,18 @@ inline Scene<T> *VFObjFileReader<T>::ReadScene(void) {
 			file_ >> v;
 			wf->PushBack(v);
 		} else if (token == "f") {
-			std::string line;
-			std::getline(file_, line, '\n');
+			Face<U> f;
+			file_ >> f;
+			wf->PushBack(f);
+			//std::string line;
+			//std::getline(file_, line, '\n');
 		} else {
 			std::string line;
 			std::getline(file_, line, '\n');
 		}
 	}
 
-  Scene<T> *sc = new Scene<T>;
+  Scene<T, U> *sc = new Scene<T, U>;
 	sc->AddObject(wf);
 
   return sc;
