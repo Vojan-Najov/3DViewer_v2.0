@@ -6,12 +6,13 @@
 
 #include "scene_object.h"
 #include "vertex.h"
+#include "face.h"
 #include "matrix4x4.h"
 
 namespace s21 {
 
-template <typename T>
-class Wireframe : public SceneObject<T> {
+template <typename T, typename U = int>
+class Wireframe : public SceneObject<T, U> {
  public:
 	Wireframe(void) = default;
 	Wireframe(const Wireframe &other) = default;
@@ -22,31 +23,45 @@ class Wireframe : public SceneObject<T> {
 
  public:
   Wireframe &PushBack(const Vertex<T> &v);
+  Wireframe &PushBack(const Face<U> &f);
 
  public:
   size_t VerticesNumber(void) const override;
+  size_t FacesNumber(void) const override;
 
  public:
   void Transform(const Matrix4x4<T> &transform) override;
 
  private:
 	std::vector<Vertex<T>> vertices_;
+	std::vector<Face<U>> faces_;
 };
 
-template <typename T>
-inline Wireframe<T> &Wireframe<T>::PushBack(const Vertex<T> &v) {
+template <typename T, typename U>
+inline Wireframe<T,U> &Wireframe<T,U>::PushBack(const Vertex<T> &v) {
 	vertices_.push_back(v);
 	return *this;
 }
 
-template <typename T>
-inline void Wireframe<T>::Transform(const Matrix4x4<T> &m) {
+template <typename T, typename U>
+inline Wireframe<T,U> &Wireframe<T,U>::PushBack(const Face<U> &f) {
+	faces_.push_back(f);
+	return *this;
+}
+
+template <typename T, typename U>
+inline void Wireframe<T,U>::Transform(const Matrix4x4<T> &m) {
 	(void) m;
 }
 
-template <typename T>
-inline size_t Wireframe<T>::VerticesNumber(void) const {
+template <typename T, typename U>
+inline size_t Wireframe<T,U>::VerticesNumber(void) const {
 	return vertices_.size();
+}
+
+template <typename T, typename U>
+inline size_t Wireframe<T,U>::FacesNumber(void) const {
+	return faces_.size();
 }
 
 }  // namespace s21
