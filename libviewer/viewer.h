@@ -18,10 +18,10 @@ class Viewer final {
  public:
   ViewerOperationResult LoadObjFile(const char *pathname);
 
-//  DrawScene();
-//  MoveObject();
-//  RotateObject();
-//  ScaleObject();
+  //  DrawScene();
+  //  MoveObject();
+  //  RotateObject();
+  //  ScaleObject();
 
  private:
   Scene<float> scene_;

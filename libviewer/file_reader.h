@@ -1,9 +1,9 @@
 #ifndef LIBVIEWER_FILE_READER_H_
 #define LIBVIEWER_FILE_READER_H_
 
-#include <string>
 #include <fstream>
 #include <iostream>
+#include <string>
 
 #include "scene.h"
 #include "wireframe.h"
@@ -25,13 +25,9 @@ class BaseFileReader {
   std::ifstream file_;
 };
 
-BaseFileReader::BaseFileReader(const char *pathname) {
-  file_.open(pathname);
-}
+BaseFileReader::BaseFileReader(const char *pathname) { file_.open(pathname); }
 
-BaseFileReader::~BaseFileReader(void) {
-  file_.close();
-}
+BaseFileReader::~BaseFileReader(void) { file_.close(); }
 
 template <typename T, typename U>
 class VFObjFileReader : public BaseFileReader {
@@ -51,29 +47,29 @@ class VFObjFileReader : public BaseFileReader {
 
 template <typename T, typename U>
 inline Scene<T, U> *VFObjFileReader<T, U>::ReadScene(void) {
-	Wireframe<T> *wf = new Wireframe<T, U>{};
+  Wireframe<T> *wf = new Wireframe<T, U>{};
 
-	while (file_) {
-		std::string token;
-		file_ >> token;
-		if (token == "v") {
-			Vertex<T> v;
-			file_ >> v;
-			wf->PushBack(v);
-		} else if (token == "f") {
-			Face<U> f;
-			file_ >> f;
-			wf->PushBack(f);
-			//std::string line;
-			//std::getline(file_, line, '\n');
-		} else {
-			std::string line;
-			std::getline(file_, line, '\n');
-		}
-	}
+  while (file_) {
+    std::string token;
+    file_ >> token;
+    if (token == "v") {
+      Vertex<T> v;
+      file_ >> v;
+      wf->PushBack(v);
+    } else if (token == "f") {
+      Face<U> f;
+      file_ >> f;
+      wf->PushBack(f);
+      // std::string line;
+      // std::getline(file_, line, '\n');
+    } else {
+      std::string line;
+      std::getline(file_, line, '\n');
+    }
+  }
 
   Scene<T, U> *sc = new Scene<T, U>;
-	sc->AddObject(wf);
+  sc->AddObject(wf);
 
   return sc;
 }
