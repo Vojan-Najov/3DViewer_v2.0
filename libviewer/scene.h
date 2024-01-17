@@ -2,6 +2,7 @@
 #define LIBVIEWER_SCENE_H_
 
 #include <list>
+#include <memory>
 
 #include "scene_object.h"
 
