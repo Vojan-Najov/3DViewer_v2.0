@@ -1,33 +1,15 @@
-#ifndef LIBVIEWER_FILE_READER_H_
-#define LIBVIEWER_FILE_READER_H_
+#ifndef LIBVIEWER_OBJ_FILE_READER_H_
+#define LIBVIEWER_OBJ_FILE_READER_H_
 
 #include <fstream>
 #include <iostream>
 #include <string>
 
+#include "base_file_reader.h"
 #include "scene.h"
 #include "wireframe.h"
 
 namespace s21 {
-
-class BaseFileReader {
- public:
-  BaseFileReader(const char *pathname);
-
- protected:
-  BaseFileReader(const BaseFileReader &other) = delete;
-  BaseFileReader(BaseFileReader &&other) = delete;
-  BaseFileReader &operator=(const BaseFileReader &other) = delete;
-  BaseFileReader &operator=(BaseFileReader &&other) = delete;
-  ~BaseFileReader(void);
-
- protected:
-  std::ifstream file_;
-};
-
-BaseFileReader::BaseFileReader(const char *pathname) { file_.open(pathname); }
-
-BaseFileReader::~BaseFileReader(void) { file_.close(); }
 
 template <typename T, typename U>
 class VFObjFileReader : public BaseFileReader {
@@ -47,6 +29,11 @@ class VFObjFileReader : public BaseFileReader {
 
 template <typename T, typename U>
 inline Scene<T, U> *VFObjFileReader<T, U>::ReadScene(void) {
+  if (!file_) {
+    return nullptr;
+  }
+
+  file_.seekg(0);
   Wireframe<T> *wf = new Wireframe<T, U>{};
 
   while (file_) {
@@ -60,8 +47,6 @@ inline Scene<T, U> *VFObjFileReader<T, U>::ReadScene(void) {
       Face<U> f;
       file_ >> f;
       wf->PushBack(f);
-      // std::string line;
-      // std::getline(file_, line, '\n');
     } else {
       std::string line;
       std::getline(file_, line, '\n');
@@ -76,4 +61,4 @@ inline Scene<T, U> *VFObjFileReader<T, U>::ReadScene(void) {
 
 }  // namespace s21
 
-#endif  // LIBVIEWER_FILE_READER_H_
+#endif  // LIBVIEWER_OBJ_FILE_READER_H_
