@@ -13,6 +13,11 @@ class Scene final {
   void AddFigure(Figure<T, U> *so);
   const Figure<T, U> &GetFigure(void) const;
 
+ public:
+  size_t GetVerticesNumber(void) const;
+  size_t GetEdgesNumber(void) const;
+  size_t GetFacesNumber(void) const;
+
  private:
   std::unique_ptr<Figure<T, U>> figure_;
 
@@ -21,13 +26,28 @@ class Scene final {
 };
 
 template <typename T, typename U>
-void Scene<T, U>::AddFigure(Figure<T, U> *so) {
+inline void Scene<T, U>::AddFigure(Figure<T, U> *so) {
   figure_ = std::unique_ptr<Figure<T, U>>(so);
 }
 
 template <typename T, typename U>
-const Figure<T, U> &Scene<T, U>::GetFigure(void) const {
+inline const Figure<T, U> &Scene<T, U>::GetFigure(void) const {
   return *figure_;
+}
+
+template <typename T, typename U>
+inline size_t Scene<T, U>::GetVerticesNumber(void) const {
+  return figure_->VerticesNumber();
+}
+
+template <typename T, typename U>
+inline size_t Scene<T, U>::GetEdgesNumber(void) const {
+  return figure_->EdgesNumber();
+}
+
+template <typename T, typename U>
+inline size_t Scene<T, U>::GetFacesNumber(void) const {
+  return figure_->FacesNumber();
 }
 
 }  // namespace s21

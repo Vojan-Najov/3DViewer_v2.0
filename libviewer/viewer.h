@@ -26,6 +26,11 @@ class Viewer final {
  public:
   ViewerOperationResult LoadObjFile(const char *pathname);
 
+ public:
+  size_t GetVerticesNumber(void) const;
+  size_t GetEdgesNumber(void) const;
+  size_t GetFacesNumber(void) const;
+
   //  DrawScene();
   //  MoveObject();
   //  RotateObject();

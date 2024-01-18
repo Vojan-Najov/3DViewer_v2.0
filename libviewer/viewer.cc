@@ -22,4 +22,16 @@ ViewerOperationResult Viewer::LoadObjFile(const char *pathname) {
   return ViewerOperationResult{};
 }
 
+size_t Viewer::GetVerticesNumber(void) const {
+  return scene_->GetVerticesNumber();
+}
+
+size_t Viewer::GetEdgesNumber(void) const {
+  return scene_->GetEdgesNumber();
+}
+
+size_t Viewer::GetFacesNumber(void) const {
+  return scene_->GetFacesNumber();
+}
+
 }  // namespace s21

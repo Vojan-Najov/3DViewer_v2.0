@@ -26,6 +26,7 @@ class Figure {
 
  public:
   size_t VerticesNumber(void) const;
+  size_t EdgesNumber(void) const;
   size_t FacesNumber(void) const;
 
  public:
@@ -56,6 +57,12 @@ inline void Figure<T, U>::Transform(const Matrix4x4<T> &m) {
 template <typename T, typename U>
 inline size_t Figure<T, U>::VerticesNumber(void) const {
   return vertices_.size();
+}
+
+template <typename T, typename U>
+inline size_t Figure<T, U>::EdgesNumber(void) const {
+  // todo
+  return faces_.size();
 }
 
 template <typename T, typename U>
