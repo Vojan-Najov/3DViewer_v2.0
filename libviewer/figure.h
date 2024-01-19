@@ -25,6 +25,9 @@ class Figure {
   Figure &PushBack(const Face<U> &f);
 
  public:
+  const std::vector<Vertex<T>> &GetVertices(void) const { return vertices_; }
+
+ public:
   size_t VerticesNumber(void) const;
   size_t EdgesNumber(void) const;
   size_t FacesNumber(void) const;
