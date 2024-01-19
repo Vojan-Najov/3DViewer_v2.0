@@ -18,8 +18,13 @@ class Scene final {
   size_t GetEdgesNumber(void) const;
   size_t GetFacesNumber(void) const;
 
+ public:
+  bool IsEmpty(void) const {
+	return !figure_;
+  } 
+
  private:
-  std::unique_ptr<Figure<T, U>> figure_;
+  std::unique_ptr<Figure<T, U>> figure_{nullptr};
 
   // Camera<T> camera_;
   // Settings settings_; it is singleton
