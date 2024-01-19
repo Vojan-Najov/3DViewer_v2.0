@@ -1,7 +1,7 @@
 TARGET = 3DViewer-v2.0
 DIST_NAME = 3DViewer-2.0
 
-CXX = g++
+CXX = clang++
 CP = cp -rf
 RM = rm -f
 RMDIR = rm -rf
@@ -17,11 +17,11 @@ endif
 
 all:
 	make -sC ${DIR_LIBVIEWER} all
-	cd ${DIR_APPVIEWER} && cmake -DCMAKE_CXX_COMPILER=g++ . && cmake --build .
+	cd ${DIR_APPVIEWER} && cmake -DCMAKE_CXX_COMPILER=${CXX} . && cmake --build .
 
 install: all
 	install -d ${DESTDIR}${PREFIX}
-	install -m 755 ${DIR_APPVIEWER}/smartcalc.app/Contents/*/smartcalc \
+	install -m 755 ${DIR_APPVIEWER}/appviewer.app/Contents/*/appviewer \
                    ${DESTDIR}${PREFIX}/${TARGET}
 
 tests:
@@ -30,10 +30,10 @@ tests:
 uninstall:
 	${RM} ${DESTDIR}${PREFIX}/${TARGET}
 
-dvi: docs/smartcalc.texi
+dvi: docs/appviewer.texi
 	texi2dvi $<
-	${RM} smartcalc.aux smartcalc.cp smartcalc.log smartcalc.toc smartcalc.cps
-	dvipdfmx ./smartcalc.dvi
+	${RM} appviewer.aux appviewer.cp appviewer.log appviewer.toc appviewer.cps
+	dvipdfmx ./appviewer.dvi
 
 dist:
 	${MKDIR} ${DIST_NAME}
@@ -59,10 +59,10 @@ clean:
 	${RMDIR} ${DIR_APPVIEWER}/CMakeFiles
 	${RM} ${DIR_APPVIEWER}/Makefile
 	${RM} ${DIR_APPVIEWER}/cmake_install.cmake
-	#${RMDIR} ${DIR_APPVIEWER}/smartcalc.app
-	#${RMDIR} ${DIR_APPVIEWER}/smartcalc_autogen
+	${RMDIR} ${DIR_APPVIEWER}/appviewer.app
+	${RMDIR} ${DIR_APPVIEWER}/appviewer_autogen
 	${RMDIR} ${DIST_NAME}
-	#${RM} smartcalc.dvi smartcalc.pdf
+	${RM} appviewer.dvi appviewer.pdf
  
 format:
 	make -C ${DIR_LIBVIEWER} format
