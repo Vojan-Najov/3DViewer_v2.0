@@ -52,9 +52,14 @@ endif()
 
 target_include_directories(appviewer PUBLIC ${CMAKE_SOURCE_DIR}/../libviewer)
 
-target_link_libraries(appviewer PUBLIC ${CMAKE_SOURCE_DIR}/../libviewer/libviewer.a)
-target_link_libraries(appviewer PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-target_link_libraries(appviewer PRIVATE Qt6::OpenGLWidgets)
+find_package(OpenGL REQUIRED)
+include_directories( ${OPENGL_INCLUDE_DIRS} )
+
+target_link_libraries(appviewer PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
+                                PRIVATE Qt6::OpenGLWidgets
+                                PUBLIC ${CMAKE_SOURCE_DIR}/../libviewer/libviewer.a
+                                PUBLIC ${OPENGL_LIBRARIES}
+)
 
 set_target_properties(appviewer PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
