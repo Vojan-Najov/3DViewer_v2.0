@@ -11,6 +11,7 @@ template <typename T, typename U>
 class RenderFFP : public RenderBase<T, U> {
  public:
   void Initialize(void) override;
+  void DrawEmptyScene(void) override;
   void DrawScene(Scene<T, U> &scene) override;
   ~RenderFFP(void) {}
 
@@ -23,6 +24,20 @@ void RenderFFP<T, U>::Initialize(void) {
   glEnable(GL_DEPTH_TEST);
   glEnableClientState(GL_VERTEX_ARRAY);
 }
+
+template <typename T, typename U>
+void RenderFFP<T, U>::DrawEmptyScene(void) {
+	float color[4] = {0., 0., 0. ,0.};
+    for (int i = 0; i < 4; ++i) {
+        color[i] = (std::rand() % 256 ) / 256.0f;
+
+    }
+    glClearColor((GLfloat)color[0], (GLfloat)color[1], (GLfloat)color[2],
+                 (GLfloat)color[3]);
+    glClearDepth((GLdouble)1.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 
 template <typename T, typename U>
 void RenderFFP<T, U>::DrawScene(Scene<T, U> &scene) {
