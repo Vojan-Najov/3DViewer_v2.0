@@ -2,14 +2,15 @@ TARGET = libviewer.a
 TEST = test
 REPORT = coverage
 
-CXX = g++
+CXX = clang++
 AR = ar rcs
 RMDIR = rm -rf
 RM = rm -f
 MKDIR = mkdir -p
 
-CXX_FLAGS = -g -Wall -Wextra -Werror -std=c++17
+CXX_FLAGS = -g -Wall -Wextra -Werror -std=c++17 -DGL_SILENCE_DEPRECATION
 GCOV_FLAGS = -fprofile-arcs -ftest-coverage -g -O0
+OPENGL = -framework OpenGL
 TEST_LIBS = -lgtest
 
 INCLUDE_DIR = .
@@ -46,7 +47,7 @@ $(REPORT): ${GCOV_OBJ} ${TEST_OBJ}
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.cc ${INCLUDE}
 	${MKDIR} ${@D}
-	${CXX} ${CXX_FLAGS} -I${INCLUDE_DIR} -o $@ -c $<
+	${CXX} ${CXX_FLAGS} -I${INCLUDE_DIR} -o $@ -c $<  
 
 ${TEST_OBJ_DIR}/%.o: ${TEST_SRC_DIR}/%.cc ${INCLUDE}
 	${MKDIR} ${@D}
