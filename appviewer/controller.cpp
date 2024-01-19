@@ -1,7 +1,5 @@
 #include "controller.h"
 
-#include <QOpenGLFunctions>
-
 namespace s21 {
 
 Controller::Controller(Viewer &viewer) : viewer_{viewer} {}
