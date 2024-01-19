@@ -1,6 +1,8 @@
 #ifndef OGLWINDOW_H
 #define OGLWINDOW_H
 
+#define GL_SILENCE_DEPRECATION
+
 #include <QMatrix4x4>
 #include <QMouseEvent>
 #include <QOpenGLFunctions>
@@ -27,6 +29,8 @@ class OGLWindow : public QOpenGLWidget
   void pupdate();
 
  signals:
+  void InitializeGLNeeded(void);
+  void redraw(void);
 };
 
 #endif  // OGLWINDOW_H
