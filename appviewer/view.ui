@@ -340,7 +340,7 @@ border-radius: 10px;
      </spacer>
     </item>
     <item>
-     <widget class="OGLWindow" name="widget" native="true">
+     <widget class="OGLWindow" name="oglwidget" native="true">
       <property name="minimumSize">
        <size>
         <width>600</width>

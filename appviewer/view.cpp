@@ -14,6 +14,8 @@ View::View(Controller &controller, QWidget *parent)
     , ui(new Ui::View)
 {
     ui->setupUi(this);
+    connect(ui->oglwidget, &OGLWindow::redraw, &controller_, &Controller::DrawScene);
+    connect(ui->oglwidget, &OGLWindow::InitializeGLNeeded, &controller_, &Controller::InitializeGLHandler);
 }
 
 View::~View()
