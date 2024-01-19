@@ -4,6 +4,7 @@
 #include <string>
 
 #include "scene.h"
+#include "render_base.h"
 
 namespace s21 {
 
@@ -16,7 +17,7 @@ struct ViewerOperationResult final {
 
 class Viewer final {
  public:
-  Viewer(void) = default;
+  Viewer(void);
   Viewer(const Viewer &other) = delete;
   Viewer(Viewer &&other) = default;
   Viewer &operator=(const Viewer &other) = delete;
@@ -25,19 +26,21 @@ class Viewer final {
 
  public:
   ViewerOperationResult LoadObjFile(const char *pathname);
+  void InitializeRender(void);
+  void DrawScene(void);
 
  public:
   size_t GetVerticesNumber(void) const;
   size_t GetEdgesNumber(void) const;
   size_t GetFacesNumber(void) const;
 
-  //  DrawScene();
   //  MoveObject();
   //  RotateObject();
   //  ScaleObject();
 
  private:
   std::unique_ptr<Scene<float, int>> scene_;
+  std::unique_ptr<RenderBase<float, int>> render_;
 };
 
 }  // namespace s21
