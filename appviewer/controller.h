@@ -2,13 +2,16 @@
 #define APPVIEWER_CONTROLLER_H_
 
 #include <QString>
+#include <QObject>
 
 #include "viewer.h"
 
 namespace s21 {
 
-class Controller
+class Controller : public QObject
 {
+ Q_OBJECT
+
  public:
     Controller(Viewer &viewer);
 
@@ -20,6 +23,10 @@ class Controller
   size_t GetEdgesNumber(void);
   size_t GetFacesNumber(void);
   QString GetErrorMessage(void);
+
+  public slots:
+    void InitializeGLHandler(void);
+    void DrawScene(void);
 
  private:
   Viewer &viewer_;

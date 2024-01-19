@@ -1,5 +1,7 @@
 #include "controller.h"
 
+#include <QOpenGLFunctions>
+
 namespace s21 {
 
 Controller::Controller(Viewer &viewer) : viewer_{viewer} {}
@@ -23,6 +25,14 @@ size_t Controller::GetFacesNumber(void) {
 
 QString Controller::GetErrorMessage(void) {
     return "TODO";
+}
+
+void Controller::InitializeGLHandler(void) {
+    viewer_.InitializeRender();
+}
+
+void Controller::DrawScene(void) {
+    viewer_.DrawScene();
 }
 
 
