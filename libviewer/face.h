@@ -10,6 +10,9 @@ class Face {
  public:
   void PushBackVertexIndex(T index);
 
+  size_t Size(void) const { return vertex_indices_.size(); }
+  const T *Data(void) const { return vertex_indices_.data(); }
+
  private:
   std::vector<T> vertex_indices_;
 };
