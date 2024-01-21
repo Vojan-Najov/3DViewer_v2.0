@@ -10,7 +10,8 @@ class RenderBase {
  public:
   virtual void Initialize(void) = 0;
   virtual void DrawEmptyScene(void) = 0;
-  virtual void DrawScene(Scene<T, U> &scene, int width, int height) = 0;
+  virtual void DrawScene(Scene<T, U> &scene, int width, int height,
+                         float xrot, float yrot) = 0;
   virtual void ResizeViewport(int width, int height) = 0;
   virtual ~RenderBase(void){};
 };
