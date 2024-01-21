@@ -8,8 +8,19 @@ namespace s21 {
 template <typename T>
 class Face {
  public:
+  using Iterator = typename std::vector<T>::iterator;
+  using ConstIterator = typename std::vector<T>::const_iterator;
+
+ public:
   void PushBackVertexIndex(T index);
 
+ public:
+  Iterator Begin(void);
+  ConstIterator Begin(void) const;
+  Iterator End(void);
+  ConstIterator End(void) const;
+
+ public:
   size_t Size(void) const { return vertex_indices_.size(); }
   const T *Data(void) const { return vertex_indices_.data(); }
 
@@ -20,6 +31,26 @@ class Face {
 template <typename T>
 inline void Face<T>::PushBackVertexIndex(T index) {
   vertex_indices_.push_back(index);
+}
+
+template <typename T>
+inline typename Face<T>::Iterator Face<T>::Begin(void) {
+  return vertex_indices_.begin();
+}
+
+template <typename T>
+inline typename Face<T>::ConstIterator Face<T>::Begin(void) const {
+  return vertex_indices_.begin();
+}
+
+template <typename T>
+inline typename Face<T>::Iterator Face<T>::End(void) {
+  return vertex_indices_.end();
+}
+
+template <typename T>
+inline typename Face<T>::ConstIterator Face<T>::End(void) const {
+  return vertex_indices_.end();
 }
 
 template <typename T>
@@ -50,7 +81,7 @@ std::istream &operator>>(std::istream &is, Face<T> &f) {
         }
       }
       if (is) {
-        f.PushBackVertexIndex(static_cast<T>(vertex_index));
+        f.PushBackVertexIndex(static_cast<T>(vertex_index - 1));
       }
     }
     if (is && is.peek() == '\n') {
