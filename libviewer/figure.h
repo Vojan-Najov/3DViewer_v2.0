@@ -25,7 +25,10 @@ class Figure {
   Figure &PushBack(const Face<U> &f);
 
  public:
+  Vertex<T> GetCentre(void) const;
+  T GetDimension(void) const;
   const std::vector<Vertex<T>> &GetVertices(void) const { return vertices_; }
+  const std::vector<Face<U>> &GetFaces(void) const { return faces_; }
 
  public:
   size_t VerticesNumber(void) const;
@@ -71,6 +74,44 @@ inline size_t Figure<T, U>::EdgesNumber(void) const {
 template <typename T, typename U>
 inline size_t Figure<T, U>::FacesNumber(void) const {
   return faces_.size();
+}
+
+template <typename T, typename U>
+inline Vertex<T> Figure<T, U>::GetCentre(void) const {
+  T x{0}, y{0}, z{0};
+  size_t n = vertices_.size();
+
+  using vit = typename std::vector<Vertex<T>>::const_iterator;
+  for (vit it = vertices_.begin(), last = vertices_.end(); it != last; ++it) {
+    x += it->x();
+    y += it->y();
+    z += it->z();
+  }
+  x /= (float)n;
+  y /= (float)n;
+  z /= (float)n;
+
+  return Vertex<T>{x, y, z};
+}
+
+template <typename T, typename U>
+inline T Figure<T, U>::GetDimension(void) const {
+  T dim{0};
+  Vertex<T> centre = GetCentre();
+  using vit = typename std::vector<Vertex<T>>::const_iterator;
+  for (vit it = vertices_.begin(), last = vertices_.end(); it != last; ++it) {
+    T tmp = std::sqrt(std::pow(it->x() - centre.x(), 2) +
+                      std::pow(it->y() - centre.y(), 2) +
+                      std::pow(it->z() - centre.z(), 2));
+    if (tmp > dim) {
+      dim = tmp;
+    }
+  }
+  if (dim < 1.0e-6f) {
+    dim = 1;
+  }
+
+  return dim;
 }
 
 }  // namespace s21
