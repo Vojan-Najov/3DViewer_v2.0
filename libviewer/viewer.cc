@@ -22,6 +22,7 @@ ViewerOperationResult Viewer::LoadObjFile(const char *pathname) {
   }
 
   scene_ = std::unique_ptr<Scene<float, int>>{sceneptr};
+  scene_->Init();
 
   return ViewerOperationResult{};
 }
