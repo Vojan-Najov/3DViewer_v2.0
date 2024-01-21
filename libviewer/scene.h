@@ -11,6 +11,7 @@ template <typename T, typename U>
 class Scene final {
  public:
   void AddFigure(Figure<T, U> *so);
+  Figure<T, U> &GetFigure(void);
   const Figure<T, U> &GetFigure(void) const;
 
  public:
@@ -19,9 +20,7 @@ class Scene final {
   size_t GetFacesNumber(void) const;
 
  public:
-  bool IsEmpty(void) const {
-	return !figure_;
-  } 
+  bool IsEmpty(void) const { return !figure_; }
 
  private:
   std::unique_ptr<Figure<T, U>> figure_{nullptr};
@@ -33,6 +32,11 @@ class Scene final {
 template <typename T, typename U>
 inline void Scene<T, U>::AddFigure(Figure<T, U> *so) {
   figure_ = std::unique_ptr<Figure<T, U>>(so);
+}
+
+template <typename T, typename U>
+inline Figure<T, U> &Scene<T, U>::GetFigure(void) {
+  return *figure_;
 }
 
 template <typename T, typename U>
