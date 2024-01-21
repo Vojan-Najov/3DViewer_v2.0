@@ -195,7 +195,7 @@ std::istream &operator>>(std::istream &is, Vertex<T> &v) {
     v[0] = static_cast<T>(x);
     v[1] = static_cast<T>(y);
     v[2] = static_cast<T>(z);
-    v[3] = static_cast<T>(w);
+    v[3] = static_cast<T>(1.0);
   }
 
   return is;
