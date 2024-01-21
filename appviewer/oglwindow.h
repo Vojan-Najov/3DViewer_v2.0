@@ -11,22 +11,20 @@
 class OGLWindow : public QOpenGLWidget
 {
   Q_OBJECT
- public:
+ private:
   float xRot, yRot;
   QPoint mPos;
 
  public:
   explicit OGLWindow(QWidget *parent = nullptr);
+  void pupdate(void);
   void mousePressEvent(QMouseEvent *m);
   void mouseMoveEvent(QMouseEvent *m);
 
  protected:
-  void initializeGL();
+  void initializeGL(void);
   void resizeGL(int w, int h);
-  void paintGL();
-
- public:
-  void pupdate();
+  void paintGL(void);
 
  signals:
   void InitializeGLNeeded(void);
