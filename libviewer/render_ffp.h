@@ -127,12 +127,10 @@ void RenderFFP<T, U>::DrawFaces(Scene<T, U> &scene) {
     const Figure<T, U> &figure = scene.GetFigure();
     glColor3f(color[0], color[1], color[2]);
     glLineWidth(10);
-    std::vector<Face<U>> faces = figure.GetFaces();
-    using fit = typename std::vector<Face<U>>::const_iterator;
-
-    for (fit it = faces.begin(), last = faces.end(); it != last; ++it) {
+    typename Figure<T,U>::FacesConstIterator it = figure.FacesBegin();
+    typename Figure<T,U>::FacesConstIterator last = figure.FacesEnd();
+    for (; it != last; ++it) {
       glDrawElements(GL_LINE_LOOP, it->Size(), GL_UNSIGNED_INT, it->Data());
-      // std::cout << "Error: " << glGetError() << '\n';
     }
   }
 }
