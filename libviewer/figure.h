@@ -13,6 +13,10 @@ namespace s21 {
 template <typename T, typename U = int>
 class Figure {
  public:
+  using FacesIterator = typename std::vector<Face<U>>::iterator;
+  using FacesConstIterator = typename std::vector<Face<U>>::const_iterator;
+
+ public:
   Figure(void) = default;
   Figure(const Figure &other) = default;
   Figure(Figure &&other) = default;
@@ -33,6 +37,12 @@ class Figure {
  public:
   const std::vector<Vertex<T>> &GetVertices(void) const { return vertices_; }
   const std::vector<Face<U>> &GetFaces(void) const { return faces_; }
+
+ public:
+  FacesIterator FacesBegin(void) { return faces_.begin(); }
+  FacesConstIterator FacesBegin(void) const { return faces_.begin(); }
+  FacesIterator FacesEnd(void) { return faces_.end(); }
+  FacesConstIterator FacesEnd(void) const { return faces_.end(); }
 
  public:
   size_t VerticesNumber(void) const;
