@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "scene.h"
 #include "render_base.h"
+#include "scene.h"
 
 namespace s21 {
 
@@ -27,7 +27,7 @@ class Viewer final {
  public:
   ViewerOperationResult LoadObjFile(const char *pathname);
   void InitializeRender(void);
-  void DrawScene(void);
+  void DrawScene(int width, int height);
 
  public:
   size_t GetVerticesNumber(void) const;

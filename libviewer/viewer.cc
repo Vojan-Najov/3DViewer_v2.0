@@ -1,17 +1,14 @@
 #include "viewer.h"
 
-#include <iostream>
 #include <cstdlib>
+#include <iostream>
 
 #include "obj_file_reader.h"
 #include "render_ffp.h"
 
 namespace s21 {
 
-Viewer::Viewer(void)
-    : scene_{nullptr}
-    , render_{new RenderFFP<float, int>{}}
-{}
+Viewer::Viewer(void) : scene_{nullptr}, render_{new RenderFFP<float, int>{}} {}
 
 ViewerOperationResult Viewer::LoadObjFile(const char *pathname) {
   VFObjFileReader<float, int> reader(pathname);
@@ -31,35 +28,33 @@ ViewerOperationResult Viewer::LoadObjFile(const char *pathname) {
 
 size_t Viewer::GetVerticesNumber(void) const {
   if (!scene_) {
-	return 0;
+    return 0;
   }
   return scene_->GetVerticesNumber();
 }
 
 size_t Viewer::GetEdgesNumber(void) const {
   if (!scene_) {
-	return 0;
+    return 0;
   }
   return scene_->GetEdgesNumber();
 }
 
 size_t Viewer::GetFacesNumber(void) const {
   if (!scene_) {
-	return 0;
+    return 0;
   }
   return scene_->GetFacesNumber();
 }
 
-void Viewer::InitializeRender(void) {
-	render_->Initialize();
-}
+void Viewer::InitializeRender(void) { render_->Initialize(); }
 
-void Viewer::DrawScene(void) {
-	if (scene_) {
-		render_->DrawScene(*scene_);
-	} else {
-		render_->DrawEmptyScene();
-	}
+void Viewer::DrawScene(int width, int height) {
+  if (scene_) {
+    render_->DrawScene(*scene_, width, height);
+  } else {
+    render_->DrawEmptyScene();
+  }
 }
 
 }  // namespace s21
