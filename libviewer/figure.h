@@ -23,10 +23,14 @@ class Figure {
  public:
   Figure &PushBack(const Vertex<T> &v);
   Figure &PushBack(const Face<U> &f);
+  void CalculateCentre(void);
+  void CalculateDimension(void);
 
  public:
   Vertex<T> GetCentre(void) const;
   T GetDimension(void) const;
+
+ public:
   const std::vector<Vertex<T>> &GetVertices(void) const { return vertices_; }
   const std::vector<Face<U>> &GetFaces(void) const { return faces_; }
 
@@ -39,6 +43,8 @@ class Figure {
   void Transform(const Matrix4x4<T> &transform);
 
  private:
+  T dimension_;
+  Vertex<T> centre_;
   std::vector<Vertex<T>> vertices_;
   std::vector<Face<U>> faces_;
 };
@@ -57,7 +63,13 @@ inline Figure<T, U> &Figure<T, U>::PushBack(const Face<U> &f) {
 
 template <typename T, typename U>
 inline void Figure<T, U>::Transform(const Matrix4x4<T> &m) {
-  (void)m;
+  using vit = typename std::vector<Vertex<T>>::iterator;
+  vit it = vertices_.begin();
+  vit last = vertices_.end();
+  for (; it != last; ++it) {
+    *it *= m;
+  }
+  centre_ *= m;
 }
 
 template <typename T, typename U>
@@ -78,6 +90,11 @@ inline size_t Figure<T, U>::FacesNumber(void) const {
 
 template <typename T, typename U>
 inline Vertex<T> Figure<T, U>::GetCentre(void) const {
+  return centre_;
+}
+
+template <typename T, typename U>
+inline void Figure<T, U>::CalculateCentre(void) {
   T x{0}, y{0}, z{0};
   size_t n = vertices_.size();
 
@@ -91,11 +108,18 @@ inline Vertex<T> Figure<T, U>::GetCentre(void) const {
   y /= (float)n;
   z /= (float)n;
 
-  return Vertex<T>{x, y, z};
+  centre_[0] = x;
+  centre_[1] = y;
+  centre_[2] = z;
 }
 
 template <typename T, typename U>
 inline T Figure<T, U>::GetDimension(void) const {
+  return dimension_;
+}
+
+template <typename T, typename U>
+inline void Figure<T, U>::CalculateDimension(void) {
   T dim{0};
   Vertex<T> centre = GetCentre();
   using vit = typename std::vector<Vertex<T>>::const_iterator;
@@ -111,7 +135,7 @@ inline T Figure<T, U>::GetDimension(void) const {
     dim = 1;
   }
 
-  return dim;
+  dimension_ = dim;
 }
 
 }  // namespace s21
