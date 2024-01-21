@@ -1,5 +1,7 @@
 #include "controller.h"
 
+#include <QDebug>
+
 namespace s21 {
 
 Controller::Controller(Viewer &viewer) : viewer_{viewer} {}
@@ -29,10 +31,13 @@ void Controller::InitializeGLHandler(void) {
     viewer_.InitializeRender();
 }
 
-void Controller::DrawScene(void) {
-    viewer_.DrawScene();
+void Controller::RedrawGLHandler(int width, int height) {
+    viewer_.DrawScene(width, height);
 }
 
+void Controller::ResizeGLHandler(int width, int height) {
+    // viewer_.ResizeViewport(width, height);
+}
 
 }  // namespace s21
 
