@@ -172,30 +172,25 @@ std::istream &operator>>(std::istream &is, Vertex<T> &v) {
   std::istream::sentry s{is};
 
   if (s) {
-    std::istream::int_type c;
     double x{0.0}, y{0.0}, z{0.0}, w{1.0};
 
     is >> std::ws;
     if (is.peek() == 'v') {
-      c = is.get();
+      is.get();
     }
-    // c = is.peek();
-    // if (c == '\n' || !std::isspace(c) || !std::isdigit(c)) {
-    //	is.setstate(std::ios_base::failbit);
-    // }
-    (void)c;
 
     is >> x >> y >> z;
     if (is) {
       is >> w;
       if (is.fail()) {
         is.clear();
+		w = 1.0;
       }
     }
     v[0] = static_cast<T>(x);
     v[1] = static_cast<T>(y);
     v[2] = static_cast<T>(z);
-    v[3] = static_cast<T>(1.0);
+    v[3] = static_cast<T>(w);
   }
 
   return is;
