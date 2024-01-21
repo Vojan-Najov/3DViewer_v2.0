@@ -20,7 +20,7 @@ void OGLWindow::initializeGL(void) {
 }
 
 void OGLWindow::paintGL(void) {
-    emit RedrawNeeded(width(), height());
+    emit RedrawNeeded(width(), height(), xRot, yRot);
 }
 
 void OGLWindow::resizeGL(int w, int h) {

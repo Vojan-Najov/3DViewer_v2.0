@@ -28,7 +28,7 @@ class OGLWindow : public QOpenGLWidget
 
  signals:
   void InitializeGLNeeded(void);
-  void RedrawNeeded(int width, int height);
+  void RedrawNeeded(int width, int height, float xrotation, float yrotation);
   void ResizeNeeded(int width, int height);
 };
 
