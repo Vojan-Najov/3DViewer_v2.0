@@ -50,9 +50,9 @@ size_t Viewer::GetFacesNumber(void) const {
 
 void Viewer::InitializeRender(void) { render_->Initialize(); }
 
-void Viewer::DrawScene(int width, int height) {
+void Viewer::DrawScene(int width, int height, float xrot, float yrot) {
   if (scene_) {
-    render_->DrawScene(*scene_, width, height);
+    render_->DrawScene(*scene_, width, height, xrot, yrot);
   } else {
     render_->DrawEmptyScene();
   }

@@ -27,7 +27,8 @@ class Viewer final {
  public:
   ViewerOperationResult LoadObjFile(const char *pathname);
   void InitializeRender(void);
-  void DrawScene(int width, int height);
+  void DrawScene(int width, int height, 
+                 float xrotation = 0.0, float yrotation = 0.0);
 
  public:
   size_t GetVerticesNumber(void) const;
