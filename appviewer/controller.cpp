@@ -31,8 +31,8 @@ void Controller::InitializeGLHandler(void) {
     viewer_.InitializeRender();
 }
 
-void Controller::RedrawGLHandler(int width, int height) {
-    viewer_.DrawScene(width, height);
+void Controller::RedrawGLHandler(int width, int height, float xrotation, float yrotation) {
+    viewer_.DrawScene(width, height, xrotation, yrotation);
 }
 
 void Controller::ResizeGLHandler(int width, int height) {

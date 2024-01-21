@@ -26,7 +26,7 @@ class Controller : public QObject
 
   public slots:
     void InitializeGLHandler(void);
-    void RedrawGLHandler(int width, int height);
+    void RedrawGLHandler(int width, int height, float xrotation, float yrotation);
     void ResizeGLHandler(int width, int height);
 
  private:
