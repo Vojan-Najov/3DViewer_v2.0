@@ -30,7 +30,8 @@ class OGLWindow : public QOpenGLWidget
 
  signals:
   void InitializeGLNeeded(void);
-  void redraw(void);
+  void RedrawNeeded(int width, int height);
+  void ResizeNeeded(int width, int height);
 };
 
 #endif  // OGLWINDOW_H
