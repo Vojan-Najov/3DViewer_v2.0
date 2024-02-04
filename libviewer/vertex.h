@@ -3,197 +3,110 @@
 
 #include <istream>
 
-namespace s21 {
+#include "matrix4x4.h"
+#include "vec4.h"
 
-template <typename T>
-class Matrix4x4;
+namespace s21 {
 
 template <typename T>
 class Vertex {
  public:
-  Vertex(void);
-  Vertex(const T &x, const T &y, const T &z, const T &w = T{1});
-  explicit Vertex(const char *str);
-  Vertex(const Vertex &other) = default;
-  Vertex(Vertex &&other) = default;
-  Vertex &operator=(const Vertex &other) = default;
-  Vertex &operator=(Vertex &&other) = default;
+  Vertex(void) = default;
+  Vertex(const Vec4<T> &vec) : vec_{vec} {}
+  Vertex(const T &x, const T &y, const T &z, const T &w = T{1})
+      : vec_{x, y, z, w} {}
+  Vertex(const Vertex &v) = default;
+  Vertex(Vertex &&v) = default;
+  Vertex &operator=(const Vertex &v) = default;
+  Vertex &operator=(Vertex &&v) = default;
   ~Vertex(void) = default;
 
  public:
-  T &x(void) noexcept;
-  const T &x(void) const noexcept;
-  T &y(void) noexcept;
-  const T &y(void) const noexcept;
-  T &z(void) noexcept;
-  const T &z(void) const noexcept;
-  T &w(void) noexcept;
-  const T &w(void) const noexcept;
+  T &x(void) { return vec_.x(); }
+  const T &x(void) const { return vec_.x(); }
+  T &y(void) { return vec_.y(); }
+  const T &y(void) const { return vec_.y(); }
+  T &z(void) { return vec_.z(); }
+  const T &z(void) const { return vec_.z(); }
+  T &w(void) { return vec_.w(); }
+  const T &w(void) const { return vec_.w(); }
 
  public:
-  T &operator[](size_t idx);
-  const T &operator[](size_t idx) const;
+  T &operator[](size_t idx) { return vec_[idx]; }
+  const T &operator[](size_t idx) const { return vec_[idx]; }
+  Vertex operator+(const Vec4<T> &vec) const { return vec_ + vec; }
+  Vertex &operator+=(const Vec4<T> &vec) {
+    vec_ += vec;
+    return *this;
+  }
+  Vec4<T> operator-(const Vertex &v) const { return vec_ - v.vec_; }
+  Vertex operator-(const Vec4<T> &vec) const { return vec_ - vec; }
+  Vertex &operator-=(const Vec4<T> &vec) {
+    vec_ -= vec;
+    return *this;
+  }
+  Vertex operator*(const T &sclr) const { return vec_ * sclr; }
+  Vertex &operator*=(const T &sclr) {
+    vec_ *= sclr;
+    return *this;
+  }
 
  public:
-  Vertex operator*(const T &ratio) const noexcept;
-  Vertex &operator*=(const T &ratio) noexcept;
-
- public:
-  Vertex(const Matrix4x4<T> source) {
-    for (size_t i = 0; i < 4; i++) {
-      point_[i] = source(i, i);
-    }
-  }
-
-  Vertex operator*(const Matrix4x4<T> &transform) const {
-    Vertex<T> temp = {0, 0, 0, 0};
-    for (size_t i = 0; i < 4; i++) {
-      for (size_t j = 0; j < 4; j++) {
-        temp[i] += (*this)[j] * transform(j, i);
-      }
-    }
-    return temp;
-  }
-
-  Vertex &operator*=(const Matrix4x4<T> &transform) {
-    (*this) = (*this) * transform;
-    return (*this);
-  }
-
-  Vertex &operator=(Matrix4x4<T> &&source) {
-    for (size_t i = 0; i < 4; i++) {
-      (*this)[i] = source(i, i);
-    }
-    return (*this);
-  }
-
-  Vertex operator+(const Vertex<T> &source) {
-    Vertex<T> temp;
-    for (size_t i = 0; i < 4; i++) {
-      temp[i] = (*this)[i] + source[i];
-    }
-    return temp;
-  }
-
-  Vertex &operator+=(const Vertex<T> &source) {
-    for (size_t i = 0; i < 4; i++) {
-      (*this)[i] += source[i];
-    }
-    return (*this);
+  Vertex &Transform(const Matrix4x4<T> &mtrx) {
+    vec_ = mtrx * vec_;
+    return *this;
   }
 
  private:
-  T point_[4];
+  Vec4<T> vec_;
 };
 
 template <typename T>
-Vertex<T>::Vertex(void) : point_{T{}, T{}, T{}, T{1}} {}
-
-template <typename T>
-Vertex<T>::Vertex(const T &x, const T &y, const T &z, const T &w)
-    : point_{x, y, z, w} {}
-
-template <typename T>
-Vertex<T>::Vertex(const char *str) : Vertex{} {
-  (void)str;
+inline Vertex<T> operator*(const T &sclr, const Vertex<T> &v) {
+  return v * sclr;
 }
 
 template <typename T>
-inline T &Vertex<T>::x(void) noexcept {
-  return point_[0];
+inline bool operator==(const Vertex<T> &lhs, const Vertex<T> &rhs) {
+  return lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z() &&
+         lhs.w() == rhs.w();
 }
 
 template <typename T>
-inline const T &Vertex<T>::x(void) const noexcept {
-  return point_[0];
+inline bool operator!=(const Vertex<T> &lhs, const Vertex<T> &rhs) {
+  return !(lhs == rhs);
 }
 
 template <typename T>
-inline T &Vertex<T>::y(void) noexcept {
-  return point_[1];
-}
-
-template <typename T>
-inline const T &Vertex<T>::y(void) const noexcept {
-  return point_[1];
-}
-
-template <typename T>
-inline T &Vertex<T>::z(void) noexcept {
-  return point_[2];
-}
-
-template <typename T>
-inline const T &Vertex<T>::z(void) const noexcept {
-  return point_[2];
-}
-
-template <typename T>
-inline T &Vertex<T>::w(void) noexcept {
-  return point_[3];
-}
-
-template <typename T>
-inline const T &Vertex<T>::w(void) const noexcept {
-  return point_[3];
-}
-
-template <typename T>
-inline T &Vertex<T>::operator[](size_t idx) {
-  return point_[idx];
-}
-
-template <typename T>
-inline const T &Vertex<T>::operator[](size_t idx) const {
-  return point_[idx];
-}
-
-template <typename T>
-inline Vertex<T> Vertex<T>::operator*(const T &ratio) const noexcept {
-  return Vertex{point_[0] * ratio, point_[1] * ratio, point_[2] * ratio,
-                point_[3]};
-}
-
-template <typename T>
-inline Vertex<T> &Vertex<T>::operator*=(const T &ratio) noexcept {
-  point_[0] *= ratio;
-  point_[1] *= ratio;
-  point_[2] *= ratio;
-  return *this;
-}
-
-template <typename T>
-Vertex<T> operator*(T ratio, Vertex<T> point) {
-  return point * ratio;
-}
-
-template <typename T>
-std::istream &operator>>(std::istream &is, Vertex<T> &v) {
+inline std::istream &operator>>(std::istream &is, Vertex<T> &v) {
   std::istream::sentry s{is};
 
   if (s) {
     double x{0.0}, y{0.0}, z{0.0}, w{1.0};
-
     is >> std::ws;
     if (is.peek() == 'v') {
       is.get();
     }
-
     is >> x >> y >> z;
-    if (is) {
-      is >> w;
-      if (is.fail()) {
-        is.clear();
-		w = 1.0;
-      }
+    while (std::isspace(is.peek()) && is.peek() != '\n') {
+      is.get();
     }
-    v[0] = static_cast<T>(x);
-    v[1] = static_cast<T>(y);
-    v[2] = static_cast<T>(z);
-    v[3] = static_cast<T>(w);
+    if (is && is.peek() != '\n') {
+      is >> w;
+    }
+    v.x() = static_cast<T>(x);
+    v.y() = static_cast<T>(y);
+    v.z() = static_cast<T>(z);
+    v.w() = static_cast<T>(w);
   }
 
   return is;
+}
+
+template <typename T>
+inline std::ostream &operator<<(std::ostream &os, const Vertex<T> &v) {
+  os << "v " << v.x() << ' ' << v.y() << ' ' << v.z() << ' ' << v.w();
+  return os;
 }
 
 }  // namespace s21

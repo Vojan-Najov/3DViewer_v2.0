@@ -12,46 +12,30 @@ class Face {
   using ConstIterator = typename std::vector<T>::const_iterator;
 
  public:
-  void PushBackVertexIndex(T index);
+  Face(void) { vertex_indices_.reserve(4); }
+  Face(const Face &other) = default;
+  Face(Face &&other) = default;
+  Face &operator=(const Face &other) = default;
+  Face &operator=(Face &&other) = default;
+  ~Face(void) = default;
 
  public:
-  Iterator Begin(void);
-  ConstIterator Begin(void) const;
-  Iterator End(void);
-  ConstIterator End(void) const;
+  void PushBackVertexIndex(T idx) { vertex_indices_.push_back(idx); }
 
  public:
+  Iterator Begin(void) { return vertex_indices_.begin(); }
+  ConstIterator Begin(void) const { return vertex_indices_.begin(); }
+  Iterator End(void) { return vertex_indices_.end(); }
+  ConstIterator End(void) const { return vertex_indices_.end(); }
+
+ public:
+  bool Empty(void) const { return vertex_indices_.empty(); }
   size_t Size(void) const { return vertex_indices_.size(); }
   const T *Data(void) const { return vertex_indices_.data(); }
 
  private:
   std::vector<T> vertex_indices_;
 };
-
-template <typename T>
-inline void Face<T>::PushBackVertexIndex(T index) {
-  vertex_indices_.push_back(index);
-}
-
-template <typename T>
-inline typename Face<T>::Iterator Face<T>::Begin(void) {
-  return vertex_indices_.begin();
-}
-
-template <typename T>
-inline typename Face<T>::ConstIterator Face<T>::Begin(void) const {
-  return vertex_indices_.begin();
-}
-
-template <typename T>
-inline typename Face<T>::Iterator Face<T>::End(void) {
-  return vertex_indices_.end();
-}
-
-template <typename T>
-inline typename Face<T>::ConstIterator Face<T>::End(void) const {
-  return vertex_indices_.end();
-}
 
 template <typename T>
 std::istream &operator>>(std::istream &is, Face<T> &f) {
@@ -62,17 +46,27 @@ std::istream &operator>>(std::istream &is, Face<T> &f) {
     if (is.peek() == 'f') {
       is.get();
     }
-    while (is && is.peek() != '\n') {
-      while (is.peek() != '\n' && std::isspace(is.peek())) {
+    while (true) {
+      while (is && is.peek() != '\n' && std::isspace(is.peek())) {
         is.get();
+      }
+      if (!is) {
+        break;
+      }
+      if (is.peek() == '\n') {
+        is.get();
+        break;
       }
       int vertex_index;
       is >> vertex_index;
+      f.PushBackVertexIndex(static_cast<T>(vertex_index));
       if (is && is.peek() == '/') {
         is.get();
         is >> std::noskipws;
-        int texture_coordinate_index;
-        is >> texture_coordinate_index;
+        if (is.peek() != '/') {
+          int texture_coordinate_index;
+          is >> texture_coordinate_index;
+        }
         if (is && is.peek() == '/') {
           is.get();
           is >> std::noskipws;
@@ -80,15 +74,13 @@ std::istream &operator>>(std::istream &is, Face<T> &f) {
           is >> normal_index;
         }
       }
-      if (is) {
-        f.PushBackVertexIndex(static_cast<T>(vertex_index - 1));
-      }
     }
     if (is && is.peek() == '\n') {
       is.get();
     }
   }
 
+  is >> std::skipws;
   return is;
 }
 

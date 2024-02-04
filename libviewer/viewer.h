@@ -3,17 +3,12 @@
 
 #include <string>
 
-#include "render_base.h"
+#include "renderer.h"
 #include "scene.h"
+#include "transform_matrix_builder.h"
+#include "viewer_operation_result.h"
 
 namespace s21 {
-
-struct ViewerOperationResult final {
-  std::string errorMessage;
-
-  bool IsSuccess(void) const { return errorMessage.empty(); }
-  bool IsFail(void) const { return !errorMessage.empty(); }
-};
 
 class Viewer final {
  public:
@@ -22,26 +17,30 @@ class Viewer final {
   Viewer(Viewer &&other) = default;
   Viewer &operator=(const Viewer &other) = delete;
   Viewer &operator=(Viewer &&other) = default;
-  ~Viewer(void) = default;
+  ~Viewer(void);
 
  public:
   ViewerOperationResult LoadObjFile(const char *pathname);
   void InitializeRender(void);
-  void DrawScene(int width, int height, 
-                 float xrotation = 0.0, float yrotation = 0.0);
+  void DrawScene(int width, int height);
+  void ResizeViewport(int width, int height);
 
  public:
   size_t GetVerticesNumber(void) const;
   size_t GetEdgesNumber(void) const;
   size_t GetFacesNumber(void) const;
+  float GetDimension(void) const;
+  bool CheckScene(void) const;
 
-  //  MoveObject();
-  //  RotateObject();
-  //  ScaleObject();
+  ViewerOperationResult MoveObject(float x, float y, float z);
+  ViewerOperationResult RotateObject(float x, float y, float z);
+  ViewerOperationResult ScaleObject(float x, float y, float z);
+  ViewerOperationResult ScaleCamera(float scale);
+  ViewerOperationResult RotateCamera(float xrot, float yrot);
 
  private:
-  std::unique_ptr<Scene<float, int>> scene_;
-  std::unique_ptr<RenderBase<float, int>> render_;
+  Scene<GLfloat, GLsizei> scene_;
+  Renderer<GLfloat, GLsizei> renderer_;
 };
 
 }  // namespace s21

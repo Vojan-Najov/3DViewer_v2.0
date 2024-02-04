@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1204</width>
-    <height>904</height>
+    <width>880</width>
+    <height>897</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>880</width>
+    <height>500</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -31,11 +37,20 @@
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMaximumSize</enum>
+      </property>
       <item>
        <widget class="QWidget" name="widget_2" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>1</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>250</width>
+          <width>275</width>
           <height>0</height>
          </size>
         </property>
@@ -261,18 +276,37 @@ border-radius: 10px;
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_14">
-               <property name="font">
-                <font>
-                 <pointsize>18</pointsize>
-                </font>
+              <widget class="QComboBox" name="countFrame">
+               <property name="styleSheet">
+                <string notr="true">background-color: white;
+border: 2px solid #ed6742;
+    border-bottom: 2px solid #b2b1b1;</string>
                </property>
-               <property name="text">
-                <string>50</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
+               <item>
+                <property name="text">
+                 <string>10</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>20</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>30</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>40</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>50</string>
+                </property>
+               </item>
               </widget>
              </item>
             </layout>
@@ -290,6 +324,23 @@ border-radius: 10px;
              </property>
              <property name="text">
               <string>Cancel</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="saveImageButton">
+             <property name="font">
+              <font>
+               <pointsize>18</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 2px solid #ed6742;
+    border-bottom: 2px solid #b2b1b1;
+</string>
+             </property>
+             <property name="text">
+              <string>Save image</string>
              </property>
             </widget>
            </item>
@@ -327,24 +378,33 @@ border-radius: 10px;
      </layout>
     </item>
     <item>
-     <spacer name="horizontalSpacer_3">
+     <spacer name="horizontalSpacer_4">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>40</width>
-        <height>20</height>
+        <width>10</width>
+        <height>5</height>
        </size>
       </property>
      </spacer>
     </item>
     <item>
      <widget class="OGLWindow" name="oglwidget" native="true">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>255</horstretch>
+        <verstretch>255</verstretch>
+       </sizepolicy>
+      </property>
       <property name="minimumSize">
        <size>
-        <width>600</width>
-        <height>600</height>
+        <width>300</width>
+        <height>150</height>
        </size>
       </property>
       <property name="maximumSize">
@@ -359,22 +419,31 @@ border-radius: 10px;
      </widget>
     </item>
     <item>
-     <spacer name="horizontalSpacer_4">
+     <spacer name="horizontalSpacer_10">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>40</width>
-        <height>20</height>
+        <width>10</width>
+        <height>5</height>
        </size>
       </property>
      </spacer>
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_15">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
       <item>
        <widget class="QWidget" name="widget_3" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -407,6 +476,12 @@ border-radius: 10px;</string>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <item>
               <widget class="QPushButton" name="colorFaceButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="font">
                 <font>
                  <pointsize>16</pointsize>
@@ -424,6 +499,12 @@ border-radius: 10px;</string>
              </item>
              <item>
               <widget class="QPushButton" name="colorVertexButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="font">
                 <font>
                  <pointsize>16</pointsize>
@@ -458,6 +539,12 @@ border-radius: 10px;</string>
              </item>
              <item>
               <widget class="QPushButton" name="colorBackgroundButton">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="font">
                 <font>
                  <pointsize>16</pointsize>
@@ -500,14 +587,20 @@ border-radius: 10px;</string>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>20</width>
-          <height>40</height>
+          <width>4</width>
+          <height>4</height>
          </size>
         </property>
        </spacer>
       </item>
       <item>
        <widget class="QWidget" name="widget_4" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>100</horstretch>
+          <verstretch>100</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -537,6 +630,23 @@ border-radius: 10px;</string>
             </widget>
            </item>
            <item>
+            <widget class="QPushButton" name="resetCamera">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-radius: 10px;
+border: 2px solid #000000;</string>
+             </property>
+             <property name="text">
+              <string>Reset Camera</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <layout class="QVBoxLayout" name="verticalLayout_9">
              <item>
               <spacer name="verticalSpacer_5">
@@ -545,8 +655,8 @@ border-radius: 10px;</string>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>20</width>
-                 <height>40</height>
+                 <width>4</width>
+                 <height>4</height>
                 </size>
                </property>
               </spacer>
@@ -573,8 +683,8 @@ border-radius: 10px;</string>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>20</width>
-                 <height>40</height>
+                 <width>4</width>
+                 <height>4</height>
                 </size>
                </property>
               </spacer>
@@ -598,7 +708,7 @@ border-radius: 10px;</string>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>25</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="font">
@@ -631,7 +741,7 @@ border-radius: 10px;</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>20</height>
+                       <height>0</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -648,7 +758,7 @@ border: 2px solid #000000;</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>20</height>
+                       <height>0</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -671,8 +781,8 @@ border: 2px solid #000000;</string>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
-                   <width>40</width>
-                   <height>20</height>
+                   <width>10</width>
+                   <height>10</height>
                   </size>
                  </property>
                 </spacer>
@@ -694,7 +804,7 @@ border: 2px solid #000000;</string>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>25</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="font">
@@ -721,7 +831,7 @@ border: 2px solid #000000;</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>20</height>
+                       <height>0</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -738,7 +848,7 @@ border: 2px solid #000000;</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>20</height>
+                       <height>0</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -761,8 +871,8 @@ border: 2px solid #000000;</string>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
-                   <width>40</width>
-                   <height>20</height>
+                   <width>10</width>
+                   <height>10</height>
                   </size>
                  </property>
                 </spacer>
@@ -784,7 +894,7 @@ border: 2px solid #000000;</string>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
-                     <height>25</height>
+                     <height>0</height>
                     </size>
                    </property>
                    <property name="font">
@@ -811,7 +921,7 @@ border: 2px solid #000000;</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>20</height>
+                       <height>0</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -828,7 +938,7 @@ border: 2px solid #000000;</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>20</height>
+                       <height>0</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -857,8 +967,8 @@ border: 2px solid #000000;</string>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>20</width>
-                 <height>40</height>
+                 <width>10</width>
+                 <height>10</height>
                 </size>
                </property>
               </spacer>
@@ -885,8 +995,8 @@ border: 2px solid #000000;</string>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>20</width>
-                 <height>40</height>
+                 <width>10</width>
+                 <height>10</height>
                 </size>
                </property>
               </spacer>
@@ -1084,6 +1194,130 @@ border: 2px solid #000000;</string>
             </spacer>
            </item>
            <item>
+            <layout class="QVBoxLayout" name="verticalLayout_20">
+             <item>
+              <spacer name="verticalSpacer_13">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Scale&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_14">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_21">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_21">
+                 <item>
+                  <widget class="QDoubleSpinBox" name="valueForScale">
+                   <property name="font">
+                    <font>
+                     <pointsize>20</pointsize>
+                    </font>
+                   </property>
+                   <property name="toolTip">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">border: 2px solid #ed6742;
+    border-bottom: 2px solid #b2b1b1;</string>
+                   </property>
+                   <property name="buttonSymbols">
+                    <enum>QAbstractSpinBox::NoButtons</enum>
+                   </property>
+                   <property name="minimum">
+                    <double>-99.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_22">
+                   <item>
+                    <widget class="QPushButton" name="plusButtonScale">
+                     <property name="styleSheet">
+                      <string notr="true">border-radius: 10px;
+border: 2px solid #000000;</string>
+                     </property>
+                     <property name="text">
+                      <string>+</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="minusButtonScale">
+                     <property name="styleSheet">
+                      <string notr="true">border-radius: 10px;
+border: 2px solid #000000;</string>
+                     </property>
+                     <property name="text">
+                      <string>-</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_10">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_11">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
             <spacer name="verticalSpacer_7">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -1095,111 +1329,6 @@ border: 2px solid #000000;</string>
               </size>
              </property>
             </spacer>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_9">
-             <item>
-              <widget class="QLabel" name="label">
-               <property name="font">
-                <font>
-                 <pointsize>15</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Scale</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_10">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_18">
-               <item>
-                <widget class="QPushButton" name="plusButtonScale">
-                 <property name="minimumSize">
-                  <size>
-                   <width>20</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">border-radius: 10px;
-border: 2px solid #000000;</string>
-                 </property>
-                 <property name="text">
-                  <string>+</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QDoubleSpinBox" name="Scalevalue">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>20</pointsize>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">border: 2px solid #ed6742;
-    border-bottom: 2px solid #b2b1b1;</string>
-                 </property>
-                 <property name="buttonSymbols">
-                  <enum>QAbstractSpinBox::NoButtons</enum>
-                 </property>
-                 <property name="showGroupSeparator" stdset="0">
-                  <bool>false</bool>
-                 </property>
-                 <property name="value">
-                  <double>1.000000000000000</double>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="minusButtonScale">
-                 <property name="minimumSize">
-                  <size>
-                   <width>20</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">border-radius: 10px;
-border: 2px solid #000000;</string>
-                 </property>
-                 <property name="text">
-                  <string>-</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_13">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-            </layout>
            </item>
           </layout>
          </item>
@@ -1221,6 +1350,15 @@ border: 2px solid #000000;</string>
       </item>
       <item>
        <widget class="QWidget" name="widget_5" native="true">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -1390,8 +1528,8 @@ border: 2px solid #ed6742;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1204</width>
-     <height>24</height>
+     <width>880</width>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">

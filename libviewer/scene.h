@@ -3,7 +3,8 @@
 
 #include <memory>
 
-#include "figure.h"
+#include "object.h"
+#include "scene_settings.h"
 
 namespace s21 {
 
@@ -18,77 +19,85 @@ class Scene final {
   ~Scene(void) = default;
 
  public:
-  void AddFigure(Figure<T, U> *so);
-  void Init(void);
+  void SetObject(std::unique_ptr<Object<T, U>> &&obj);
 
  public:
-  Figure<T, U> &GetFigure(void);
-  const Figure<T, U> &GetFigure(void) const;
-  Vertex<T> GetCamera(void) const;
+  Object<T, U> &GetObject(void);
+  const Object<T, U> &GetObject(void) const;
+  Vertex<T> &GetCamera(void);
+  const Vertex<T> &GetCamera(void) const;
   T GetCameraFocalRo(void) const;
   size_t GetVerticesNumber(void) const;
   size_t GetEdgesNumber(void) const;
   size_t GetFacesNumber(void) const;
 
  public:
-  bool IsEmpty(void) const { return !figure_; }
+  bool IsEmpty(void) const { return !object_; }
 
  private:
-  Vertex<T> camera_;
-  std::unique_ptr<Figure<T, U>> figure_{nullptr};
-
-  // Settings settings_; it is singleton
+  Vertex<T> camera_{};
+  std::unique_ptr<Object<T, U>> object_{nullptr};
 };
 
 template <typename T, typename U>
-inline void Scene<T, U>::AddFigure(Figure<T, U> *so) {
-  figure_ = std::unique_ptr<Figure<T, U>>(so);
-}
-
-template <typename T, typename U>
-inline void Scene<T, U>::Init(void) {
-  if (figure_) {
-    figure_->CalculateCentre();
-    figure_->CalculateDimension();
-    camera_ = figure_->GetCentre();
-    camera_.z() += 2 * figure_->GetDimension();
+inline void Scene<T, U>::SetObject(std::unique_ptr<Object<T, U>> &&obj) {
+  object_ = std::move(obj);
+  if (object_) {
+    object_->PrepareToRendering();
+    camera_ = object_->Centre();
+    camera_.z() += 2 * object_->Dimension();
   }
 }
 
 template <typename T, typename U>
-inline Figure<T, U> &Scene<T, U>::GetFigure(void) {
-  return *figure_;
+inline Object<T, U> &Scene<T, U>::GetObject(void) {
+  return *object_;
 }
 
 template <typename T, typename U>
-inline const Figure<T, U> &Scene<T, U>::GetFigure(void) const {
-  return *figure_;
+inline const Object<T, U> &Scene<T, U>::GetObject(void) const {
+  return *object_;
 }
 
 template <typename T, typename U>
-inline Vertex<T> Scene<T, U>::GetCamera(void) const {
+inline Vertex<T> &Scene<T, U>::GetCamera(void) {
+  return camera_;
+}
+
+template <typename T, typename U>
+inline const Vertex<T> &Scene<T, U>::GetCamera(void) const {
   return camera_;
 }
 
 template <typename T, typename U>
 inline T Scene<T, U>::GetCameraFocalRo(void) const {
-  T dim = figure_->GetDimension();
+  T dim = object_->Dimension();
   return dim > 1.0e-6f ? dim / 10 : 1;
+  // return 1e-6;
 }
 
 template <typename T, typename U>
 inline size_t Scene<T, U>::GetVerticesNumber(void) const {
-  return figure_->VerticesNumber();
+  if (object_) {
+    return object_->VerticesNumber();
+  }
+  return 0;
 }
 
 template <typename T, typename U>
 inline size_t Scene<T, U>::GetEdgesNumber(void) const {
-  return figure_->EdgesNumber();
+  if (object_) {
+    return object_->EdgesNumber();
+  }
+  return 0;
 }
 
 template <typename T, typename U>
 inline size_t Scene<T, U>::GetFacesNumber(void) const {
-  return figure_->FacesNumber();
+  if (object_) {
+    return object_->FacesNumber();
+  }
+  return 0;
 }
 
 }  // namespace s21
